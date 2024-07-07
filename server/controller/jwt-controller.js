@@ -14,7 +14,7 @@ export const authenticateToken = (request, response, next) => {
         return response.status(401).json({ msg: 'token is missing' });
     }
 
-    jwt.verify(token, process.env.ACCESS_SECRET_KEY, (error, user) => {
+        jwt.verify(token, "rsdrsd", (error, user) => {
         if (error) {
             return response.status(403).json({ msg: 'invalid token' })
         }
@@ -37,11 +37,11 @@ export const createNewToken = async (request, response) => {
         return response.status(404).json({ msg: 'Refresh token is not valid'});
     }
 
-    jwt.verify(token.token, process.env.REFRESH_SECRET_KEY, (error, user) => {
+    jwt.verify(token.token, "rsdrsd", (error, user) => {
         if (error) {
             response.status(500).json({ msg: 'invalid refresh token'});
         }
-        const accessToken = jwt.sign(user, process.env.ACCESS_SECRET_KEY, { expiresIn: '15m'});
+        const accessToken = jwt.sign(user, "rsdrsd", { expiresIn: '15m'});
 
         return response.status(200).json({ accessToken: accessToken })
     })
