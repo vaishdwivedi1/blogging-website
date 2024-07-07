@@ -6,11 +6,25 @@ import bodyParser from 'body-parser';
 //components
 import Connection from './database/db.js';
 import Router from './routes/route.js';
-
+import path from "path"
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "build")));
+
+// Catch-all route to handle client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+
 
 app.use(cors());
 app.use(bodyParser.json({ extended: true }));
